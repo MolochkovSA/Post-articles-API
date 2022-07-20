@@ -10,7 +10,7 @@ export const checkAuthor = async (req, res, next) => {
   if (!data) {
     throw new NotFoundError(`Id ${id} not found`, 404)
   }
-  if (req.locals.isAdmin || req.locals._id === data.author.toString()) {
+  if (req.locals.isAdmin || req.locals._id === data.author._id.toString()) {
     return next()
   }
   throw new AuthorizeError(

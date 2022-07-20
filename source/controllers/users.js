@@ -11,6 +11,7 @@ import {
   getLockedUserProperties,
   checkLockedProperties,
   ValidationError,
+  NotFoundError,
 } from '../utils/index.js'
 
 const debugRouter = dg('router:users')
@@ -42,7 +43,10 @@ export const getById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
   const data = await findById(id)
-  res.status(200).json(data)
+  if (data) {
+    res.status(200).json(data)
+  }
+  throw new NotFoundError(`User not found by id ${id}`, 404)
 }
 
 export const updateById = async (req, res) => {
