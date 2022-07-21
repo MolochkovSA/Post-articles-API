@@ -7,8 +7,9 @@ import { ValidationError } from '../utils/index.js'
 export const create = async (obj) => {
   try {
     const data = await users.create(obj)
-    delete data._doc.password
-    return data
+    const userObject = data.toObject()
+    delete userObject.password
+    return userObject
   } catch (error) {
     throw new ValidationError(error.message, 400)
   }
