@@ -41,7 +41,3 @@ LOCKED_ARTICLES_PROPERTIES = author, check
 # Документация по проекту
 
 [Swagger доки]().
-
-добавить лимитер express-rate-limit
-добавить тесты
-добавить свагер
