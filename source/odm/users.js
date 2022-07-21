@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       minlength: 3,
       maxlength: 25,
-      match: /^[a-zA-Z]+$/,
+      match: /^[a-zA-Z0-9]+$/,
     },
     sex: {
       type: String,

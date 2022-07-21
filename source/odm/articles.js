@@ -1,12 +1,14 @@
 // Core
 import mongoose from 'mongoose'
 
+// Instruments
+import { ValidationError } from '../utils/index.js'
+
 const articlesSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Users',
-      required: true,
     },
     theme: {
       type: String,
@@ -26,5 +28,31 @@ const articlesSchema = new mongoose.Schema(
   },
   { timestamps: { createdAt: 'created', updatedAt: 'modified' } }
 )
+
+articlesSchema.post('save', function (error, doc, next) {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(
+      new ValidationError(
+        `Duplicate value error in ${JSON.stringify(error.keyValue)}`,
+        400
+      )
+    )
+  } else {
+    next()
+  }
+})
+
+articlesSchema.post('findOneAndUpdate', function (error, doc, next) {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(
+      new ValidationError(
+        `Duplicate value error in ${JSON.stringify(error.keyValue)}`,
+        400
+      )
+    )
+  } else {
+    next()
+  }
+})
 
 export const articles = mongoose.model('Articles', articlesSchema)
