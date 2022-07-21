@@ -30,7 +30,7 @@ export const get = async (req, res) => {
 
 export const post = async (req, res) => {
   debug(debugRouter, req)
-  checkLockedProperties(req, getLockedUserProperties())
+  await checkLockedProperties(req, getLockedUserProperties())
   const data = await create(req.body)
   if (data) {
     res.status(201).json(data)
@@ -51,7 +51,7 @@ export const getById = async (req, res) => {
 
 export const updateById = async (req, res) => {
   debug(debugRouter, req)
-  checkLockedProperties(req, getLockedUserProperties())
+  await checkLockedProperties(req, getLockedUserProperties())
   const id = req.params['userId']
   const data = await findByIdAndUpdate(id, req.body, { new: true })
   res.status(200).json(data)

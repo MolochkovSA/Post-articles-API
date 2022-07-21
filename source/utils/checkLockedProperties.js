@@ -1,8 +1,8 @@
 // Instruments
 import { AuthorizeError } from './index.js'
 
-export const checkLockedProperties = (req, properties) => {
-  properties.forEach((prop) => {
+export const checkLockedProperties = async (req, properties) => {
+  await properties.forEach((prop) => {
     if ((prop, req.body.hasOwnProperty(prop))) {
       try {
         if (!req.locals.isAdmin) {

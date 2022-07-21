@@ -18,6 +18,9 @@ DB_URL='mongodb://localhost:27017/smolochkov'
 # Admin profile
 ADMIN={"name":"admin", "sex":"male","birthDay":"1988-01-01", "phone": "+7-123-456-78-90", "email": "admin@mail.ru", "password":"Very_strong_pa$$word_is%123456789", "isAdmin": true}
 
+# JWT password
+PASSWORD='Very_secret_pa$$word_is%123456789'
+
 # Locked user properties
 LOCKED_USER_PROPERTIES = isAdmin, articles, created, modified, __v
 
@@ -39,7 +42,6 @@ LOCKED_ARTICLES_PROPERTIES = author, check
 
 [Swagger доки]().
 
-добавить лимитер
-добавить валидацию
+добавить лимитер express-rate-limit
 добавить тесты
 добавить свагер

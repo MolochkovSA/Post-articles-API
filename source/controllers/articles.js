@@ -32,7 +32,7 @@ export const get = async (req, res) => {
 
 export const post = async (req, res) => {
   debug(debugRouter, req)
-  checkLockedProperties(req, getLockedArticleProperties())
+  await checkLockedProperties(req, getLockedArticleProperties())
   const authorId = req.locals._id
   req.body.author = authorId
   const data = await create(req.body)
@@ -59,7 +59,7 @@ export const getById = async (req, res) => {
 
 export const updateById = async (req, res) => {
   debug(debugRouter, req)
-  checkLockedProperties(req, getLockedArticleProperties())
+  await checkLockedProperties(req, getLockedArticleProperties())
   const id = req.params['articleId']
   const data = await findByIdAndUpdate(id, { check: false })
   if (data) {

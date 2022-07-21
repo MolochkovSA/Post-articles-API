@@ -51,6 +51,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Property '{PATH}' is required"],
       match: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/,
+      minlength: 8,
     },
     isAdmin: {
       type: Boolean,
@@ -88,7 +89,6 @@ userSchema.pre('findOneAndUpdate', async function (next) {
 })
 
 userSchema.post('save', function (error, doc, next) {
-  console.log(error)
   if (error.name === 'MongoServerError' && error.code === 11000) {
     next(
       new ValidationError(
@@ -102,7 +102,6 @@ userSchema.post('save', function (error, doc, next) {
 })
 
 userSchema.post('findOneAndUpdate', function (error, doc, next) {
-  console.log(error)
   if (error.name === 'MongoServerError' && error.code === 11000) {
     next(
       new ValidationError(

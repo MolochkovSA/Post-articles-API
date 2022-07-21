@@ -21,6 +21,7 @@ createAdmin()
 
 const app = express()
 app.use(express.json())
+app.disable('x-powered-by')
 
 // Logger
 if (process.env.NODE_ENV === 'development') {
