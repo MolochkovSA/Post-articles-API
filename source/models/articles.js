@@ -16,7 +16,7 @@ export const create = async (obj) => {
 export const find = async () => {
   const data = await articles.find().populate({
     path: 'author',
-    select: '-__v -password -isAdmin -articles -created -modified',
+    select: 'name',
   })
   return data
 }
@@ -24,7 +24,7 @@ export const find = async () => {
 export const findById = async (id) => {
   const data = await articles.findById(id).populate({
     path: 'author',
-    select: '-__v -password -isAdmin -articles -created -modified',
+    select: 'name',
   })
   return data
 }

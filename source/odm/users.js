@@ -58,8 +58,26 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     articles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Articles' }],
+    age: {
+      type: Number,
+      virtual: true,
+      get() {
+        const ageDifMs = Date.now() - this.birthDay.getTime()
+        const ageDate = new Date(ageDifMs)
+        return Math.abs(ageDate.getUTCFullYear() - 1970)
+      },
+      set() {
+        throw new ValidationError(
+          'can not set age, please specify birth date',
+          400
+        )
+      },
+    },
   },
-  { timestamps: { createdAt: 'created', updatedAt: 'modified' } }
+  {
+    timestamps: { createdAt: 'created', updatedAt: 'modified' },
+    toObject: { getters: true, virtuals: true },
+  }
 )
 
 userSchema.pre('save', async function (next) {
@@ -80,9 +98,7 @@ userSchema.post('save', function (error, doc, next) {
   if (error.name === 'MongoServerError' && error.code === 11000) {
     next(
       new ValidationError(
-        `Error ${error.codeName || ''} in fuild ${JSON.stringify(
-          error.keyValue
-        )}`,
+        `Duplicate value error in ${JSON.stringify(error.keyValue)}`,
         400
       )
     )
@@ -96,9 +112,7 @@ userSchema.post('findOneAndUpdate', function (error, doc, next) {
   if (error.name === 'MongoServerError' && error.code === 11000) {
     next(
       new ValidationError(
-        `Error ${error.codeName || ''} in fuild ${JSON.stringify(
-          error.keyValue
-        )}`,
+        `Duplicate value error in ${JSON.stringify(error.keyValue)}`,
         400
       )
     )

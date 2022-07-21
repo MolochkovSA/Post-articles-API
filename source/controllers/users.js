@@ -44,7 +44,7 @@ export const getById = async (req, res) => {
   const id = req.params['userId']
   const data = await findById(id)
   if (data) {
-    res.status(200).json(data)
+    return res.status(200).json(data)
   }
   throw new NotFoundError(`User not found by id ${id}`, 404)
 }
