@@ -1,5 +1,4 @@
 export { checkUser, checkAuthor } from './chekRole/index.js'
-export { passwordToHashMiddle } from './passwordToHashMiddle.js'
 export { idValidator } from './validators/index.js'
 export { authorize } from './authorize.js'
 export { authenticate } from './authenticate.js'

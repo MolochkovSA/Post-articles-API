@@ -10,7 +10,7 @@ const articlesSchema = new mongoose.Schema(
     },
     theme: {
       type: String,
-      required: [true, 'Property "theme" is required'],
+      required: [true, "Property '{PATH}' is required"],
       unique: true,
       minlength: 3,
       maxlength: 100,
