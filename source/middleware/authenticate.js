@@ -6,7 +6,7 @@ import randomize from 'randomatic'
 import { users, auth } from '../models/index.js'
 
 // Instruments
-import { comparePassword, AuthorizeError } from '../utils/index.js'
+import { getPassword, comparePassword, AuthorizeError } from '../utils/index.js'
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization')
@@ -29,13 +29,19 @@ export const authenticate = async (req, res, next) => {
   if (!result) {
     throw new AuthorizeError('Сredentials are not valid', 401)
   }
-  const key = randomize('Aa0!', 30)
 
+  const existingAuth = await auth.findOne({ userId: user._id })
+  if (existingAuth) {
+    await auth.findOneAndDelete({ userId: user._id })
+  }
+
+  const salt = randomize('Aa0!', 30)
+  const key = getPassword() + salt
   const token = await jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, key)
 
   const storage = await auth.create({
     userId: user._id,
-    key: key,
+    salt: salt,
   })
   if (!storage) {
     throw new AuthorizeError('Token is not written to the database', 400)

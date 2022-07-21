@@ -7,7 +7,7 @@ const authSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  key: {
+  salt: {
     type: String,
     required: true,
     minlength: 30,

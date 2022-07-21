@@ -1,6 +1,7 @@
 export {
   getPort,
   getDBUrl,
+  getPassword,
   getAdminProfile,
   getLockedUserProperties,
   getLockedArticleProperties,
@@ -21,3 +22,4 @@ export {
 export { createAdmin } from './createAdmin.js'
 export { passwordToHash, comparePassword } from './passwordHash/index.js'
 export { checkLockedProperties } from './checkLockedProperties.js'
+export { getIdFromToken } from './getIdFromToken.js'
