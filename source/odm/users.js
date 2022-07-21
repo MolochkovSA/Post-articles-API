@@ -67,4 +67,10 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
+userSchema.pre('findOneAndUpdate', async function (next) {
+  console.log(`PRE findOneAndUpdate`, this._update)
+  this._update.password = await passwordToHash(this._update.password)
+  next()
+})
+
 export const users = mongoose.model('Users', userSchema)
