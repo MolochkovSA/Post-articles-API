@@ -68,7 +68,10 @@ userSchema.pre('save', async function (next) {
 })
 
 userSchema.pre('findOneAndUpdate', async function (next) {
-  this._update.password = await passwordToHash(this._update.password)
+  const password = this._update.password
+  if (password) {
+    this._update.password = await passwordToHash(password)
+  }
   next()
 })
 
