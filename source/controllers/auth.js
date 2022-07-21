@@ -2,8 +2,8 @@
 import dg from 'debug'
 
 // Models
-import { tokenStorage } from '../models/index.js'
-const { findOneAndDelete } = tokenStorage
+import { auth } from '../models/index.js'
+const { findOneAndDelete } = auth
 
 // Instruments
 import { debug } from '../utils/index.js'
@@ -18,6 +18,8 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res, next) => {
   debug(debugRouter, req)
   const token = req.get('X-token')
-  await tokenStorage.findOneAndDelete({ token: token })
+  const [header, paylod, signature] = token.split('.')
+  const { _id } = JSON.parse(Buffer.from(paylod, 'base64').toString())
+  await findOneAndDelete({ userId: _id })
   res.status(204).send()
 }

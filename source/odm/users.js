@@ -66,12 +66,6 @@ const userSchema = new mongoose.Schema(
         const ageDate = new Date(ageDifMs)
         return Math.abs(ageDate.getUTCFullYear() - 1970)
       },
-      set() {
-        throw new ValidationError(
-          'can not set age, please specify birth date',
-          400
-        )
-      },
     },
   },
   {

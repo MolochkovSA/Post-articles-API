@@ -1,17 +1,17 @@
 //Object Data Modelling (ODM)
-import { tokenStorage } from '../odm/index.js'
+import { auth } from '../odm/index.js'
 
 export const create = async (obj) => {
-  const data = await tokenStorage.create(obj)
+  const data = await auth.create(obj)
   return data
 }
 
 export const findOne = async (obj) => {
-  const data = await tokenStorage.findOne(obj)
+  const data = await auth.findOne(obj)
   return data
 }
 
 export const findOneAndDelete = async (obj) => {
-  const data = await tokenStorage.findOneAndDelete(obj)
+  const data = await auth.findOneAndDelete(obj)
   return data
 }

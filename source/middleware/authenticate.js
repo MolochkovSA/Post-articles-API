@@ -3,18 +3,18 @@ import jwt from 'jsonwebtoken'
 import randomize from 'randomatic'
 
 // Models
-import { users, tokenStorage } from '../models/index.js'
+import { users, auth } from '../models/index.js'
 
 // Instruments
 import { comparePassword, AuthorizeError } from '../utils/index.js'
 
 export const authenticate = async (req, res, next) => {
-  const auth = req.get('Authorization')
-  if (!auth) {
+  const authHeader = req.get('Authorization')
+  if (!authHeader) {
     throw new AuthorizeError('Сredentials are not valid', 401)
   }
 
-  const [type, credentials] = auth.split(' ')
+  const [type, credentials] = authHeader.split(' ')
   const [email, password] = Buffer.from(credentials, 'base64')
     .toString()
     .split(':')
@@ -33,8 +33,8 @@ export const authenticate = async (req, res, next) => {
 
   const token = await jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, key)
 
-  const storage = await tokenStorage.create({
-    token: token,
+  const storage = await auth.create({
+    userId: user._id,
     key: key,
   })
   if (!storage) {

@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken'
 
 // Models
-import { tokenStorage } from '../models/index.js'
+import { auth } from '../models/index.js'
 
 // Instruments
 import { AuthorizeError } from '../utils/index.js'
@@ -15,9 +15,11 @@ export const authorize = async (req, res, next) => {
       403
     )
   }
+  const [header, paylod, signature] = token.split('.')
+  const { _id } = JSON.parse(Buffer.from(paylod, 'base64').toString())
 
-  const tokenObj = await tokenStorage.findOne({ token: token })
-  if (!tokenObj) {
+  const obj = await auth.findOne({ userId: _id })
+  if (!obj) {
     throw new AuthorizeError(
       'That may be, but you have no right to access it',
       403
@@ -25,7 +27,7 @@ export const authorize = async (req, res, next) => {
   }
 
   try {
-    const verify = await jwt.verify(token, tokenObj.key)
+    const verify = await jwt.verify(token, obj.key)
     req.locals = verify
     next()
   } catch {

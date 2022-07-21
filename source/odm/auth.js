@@ -1,8 +1,8 @@
 // Core
 import mongoose from 'mongoose'
 
-const tokenStorageSchema = new mongoose.Schema({
-  token: {
+const authSchema = new mongoose.Schema({
+  userId: {
     type: String,
     required: true,
     unique: true,
@@ -14,4 +14,4 @@ const tokenStorageSchema = new mongoose.Schema({
   },
 })
 
-export const tokenStorage = mongoose.model('TokenStorage', tokenStorageSchema)
+export const auth = mongoose.model('Auth', authSchema)
