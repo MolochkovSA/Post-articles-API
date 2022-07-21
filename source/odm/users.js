@@ -2,7 +2,7 @@
 import mongoose from 'mongoose'
 
 // Instruments
-import { passwordToHash } from '../utils/index.js'
+import { passwordToHash, ValidationError } from '../utils/index.js'
 
 const userSchema = new mongoose.Schema(
   {
@@ -73,6 +73,38 @@ userSchema.pre('findOneAndUpdate', async function (next) {
     this._update.password = await passwordToHash(password)
   }
   next()
+})
+
+userSchema.post('save', function (error, doc, next) {
+  console.log(error)
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(
+      new ValidationError(
+        `Error ${error.codeName || ''} in fuild ${JSON.stringify(
+          error.keyValue
+        )}`,
+        400
+      )
+    )
+  } else {
+    next()
+  }
+})
+
+userSchema.post('findOneAndUpdate', function (error, doc, next) {
+  console.log(error)
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(
+      new ValidationError(
+        `Error ${error.codeName || ''} in fuild ${JSON.stringify(
+          error.keyValue
+        )}`,
+        400
+      )
+    )
+  } else {
+    next()
+  }
 })
 
 export const users = mongoose.model('Users', userSchema)
