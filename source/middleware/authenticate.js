@@ -30,11 +30,6 @@ export const authenticate = async (req, res, next) => {
     throw new AuthorizeError('Сredentials are not valid', 401)
   }
 
-  const existingAuth = await auth.findOne({ userId: user._id })
-  if (existingAuth) {
-    await auth.findOneAndDelete({ userId: user._id })
-  }
-
   const salt = randomize('Aa0!', 30)
   const key = getPassword() + salt
   const token = await jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, key)
