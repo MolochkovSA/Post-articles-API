@@ -15,12 +15,13 @@ import {
 } from './utils/index.js'
 import { NotFoundError } from './utils/index.js'
 import { createAdmin } from './utils/index.js'
+import { bodyParserWrapper } from './utils/index.js'
 
 // Create admin
 createAdmin()
 
 const app = express()
-app.use(express.json())
+app.use(bodyParserWrapper(express.json()))
 app.disable('x-powered-by')
 
 // Logger
