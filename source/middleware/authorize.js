@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { auth } from '../services/index.js'
 
 // Instruments
-import { getIdFromToken, AuthorizeError } from '../utils/index.js'
+import { getPayloadFromToken, AuthorizeError } from '../utils/index.js'
 
 // Config
 import { JWT_PASSWORD } from '../config.js'
@@ -16,9 +16,9 @@ export const authorize = async (req, res, next) => {
     throw new AuthorizeError('That may be, but you have no right to access it')
   }
 
-  const id = getIdFromToken(token)
+  const payload = getPayloadFromToken(token)
 
-  const obj = await auth.findOne({ userId: id })
+  const obj = await auth.findOne({ payload: payload })
 
   if (!obj) {
     throw new AuthorizeError('That may be, but you have no right to access it')

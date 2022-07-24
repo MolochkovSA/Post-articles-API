@@ -20,5 +20,5 @@ export {
 } from './errors/index.js'
 export { createAdmin } from './createAdmin.js'
 export { passwordToHash, comparePassword } from './passwordHash/index.js'
-export { getIdFromToken } from './getIdFromToken.js'
+export { getPayloadFromToken } from './getPayloadFromToken.js'
 export { bodyParserWrapper } from './bodyParserWrapper.js'

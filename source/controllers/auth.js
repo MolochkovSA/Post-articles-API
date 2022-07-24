@@ -6,7 +6,7 @@ import { auth } from '../services/index.js'
 const { findOneAndDelete } = auth
 
 // Instruments
-import { debug, getIdFromToken } from '../utils/index.js'
+import { debug } from '../utils/index.js'
 
 const debugRouter = dg('router:auth')
 
@@ -18,7 +18,6 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res, next) => {
   debug(debugRouter, req)
   const token = req.get('X-token')
-  const id = getIdFromToken(token)
-  await findOneAndDelete({ userId: id })
+  await findOneAndDelete(token)
   res.status(204).send()
 }

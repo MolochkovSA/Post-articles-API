@@ -6,7 +6,11 @@ import randomize from 'randomatic'
 import { users, auth } from '../services/index.js'
 
 // Instruments
-import { comparePassword, AuthorizeError } from '../utils/index.js'
+import {
+  comparePassword,
+  AuthorizeError,
+  getPayloadFromToken,
+} from '../utils/index.js'
 
 // Config
 import { JWT_PASSWORD } from '../config.js'
@@ -37,10 +41,13 @@ export const authenticate = async (req, res, next) => {
   const key = JWT_PASSWORD + salt
   const token = await jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, key)
 
+  const payload = getPayloadFromToken(token)
+
   const storage = await auth.create({
-    userId: user._id,
+    payload: payload,
     salt: salt,
   })
+
   if (!storage) {
     throw new AuthorizeError('Token is not written to the database')
   }
