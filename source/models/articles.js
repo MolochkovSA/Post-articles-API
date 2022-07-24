@@ -38,3 +38,21 @@ export const findByIdAndDelete = async (id) => {
   const data = await articles.findByIdAndDelete(id)
   return data
 }
+
+export const findByIdAndApprove = async (id) => {
+  const data = await articles.findByIdAndUpdate(
+    id,
+    { check: true },
+    { new: true }
+  )
+  return data
+}
+
+export const findByIdAndUnapprove = async (id) => {
+  const data = await articles.findByIdAndUpdate(
+    id,
+    { check: false },
+    { new: true }
+  )
+  return data
+}

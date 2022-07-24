@@ -52,5 +52,24 @@ export const findByIdAndUpdate = async (id, obj) => {
 }
 
 export const findByIdAndDelete = async (id) => {
-  await users.findByIdAndDelete(id)
+  const data = await users.findByIdAndDelete(id)
+  return data
+}
+
+export const findByIdAndMakeAdmin = async (id) => {
+  const data = await users.findByIdAndUpdate(
+    id,
+    { isAdmin: true },
+    { new: true }
+  )
+  return data
+}
+
+export const findByIdAndExcludeAdmin = async (id) => {
+  const data = await users.findByIdAndUpdate(
+    id,
+    { isAdmin: false },
+    { new: true }
+  )
+  return data
 }

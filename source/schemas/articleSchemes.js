@@ -8,8 +8,7 @@ export const createArticleSchema = Joi.object({
 })
 
 export const updateArticleSchema = Joi.object({
-  author: Joi.string().trim().alphanum(),
+  author: Joi.string(),
   theme: Joi.string().trim().min(3).max(100),
   content: Joi.string().trim(),
-  check: Joi.boolean(),
 })

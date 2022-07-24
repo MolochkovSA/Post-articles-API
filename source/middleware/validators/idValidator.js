@@ -4,8 +4,8 @@ import mongoose from 'mongoose'
 // Instruments
 import { ValidationError } from '../../utils/index.js'
 
-export const idValidator = async (req, res, next) => {
-  const id = req.params['userId'] || req.params['articleId'] // да, плохое решение, потом разберусь!!!!!!!!!!!
+export const idValidator = (param) => async (req, res, next) => {
+  const id = req.params[param]
   if (mongoose.Types.ObjectId.isValid(id)) {
     return next()
   } else {

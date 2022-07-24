@@ -1,11 +1,4 @@
-export {
-  getPort,
-  getDBUrl,
-  getPassword,
-  getAdminProfile,
-  getLockedUserProperties,
-  getLockedArticleProperties,
-} from './env/index.js'
+export { getPort, getDBUrl, getPassword, getAdminProfile } from './env/index.js'
 export {
   logger,
   debug,
@@ -21,6 +14,5 @@ export {
 } from './errors/index.js'
 export { createAdmin } from './createAdmin.js'
 export { passwordToHash, comparePassword } from './passwordHash/index.js'
-export { checkLockedProperties } from './checkLockedProperties.js'
 export { getIdFromToken } from './getIdFromToken.js'
 export { bodyParserWrapper } from './bodyParserWrapper.js'

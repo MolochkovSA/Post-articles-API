@@ -3,18 +3,19 @@ import dg from 'debug'
 
 // Models
 import { articles } from '../models/index.js'
-const { create, find, findById, findByIdAndUpdate, findByIdAndDelete } =
-  articles
+const {
+  create,
+  find,
+  findById,
+  findByIdAndUpdate,
+  findByIdAndDelete,
+  findByIdAndApprove,
+  findByIdAndUnapprove,
+} = articles
 import { users } from '../models/index.js'
 
 // Instruments
-import {
-  debug,
-  getLockedArticleProperties,
-  checkLockedProperties,
-  ValidationError,
-  NotFoundError,
-} from '../utils/index.js'
+import { debug, ValidationError, NotFoundError } from '../utils/index.js'
 
 const debugRouter = dg('router:articles')
 
@@ -32,7 +33,6 @@ export const get = async (req, res) => {
 
 export const post = async (req, res) => {
   debug(debugRouter, req)
-  await checkLockedProperties(req, getLockedArticleProperties())
   const authorId = req.locals._id
   req.body.author = authorId
   const data = await create(req.body)
@@ -53,20 +53,19 @@ export const getById = async (req, res) => {
   if (data) {
     res.status(200).json(data)
   } else {
-    throw new NotFoundError(`Id ${id} not found`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`, 404)
   }
 }
 
 export const updateById = async (req, res) => {
   debug(debugRouter, req)
-  await checkLockedProperties(req, getLockedArticleProperties())
   const id = req.params['articleId']
   const data = await findByIdAndUpdate(id, { check: false })
   if (data) {
     const data = await findByIdAndUpdate(id, req.body, { new: true })
     res.status(200).json(data)
   } else {
-    throw new NotFoundError(`Id ${id} not found`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`, 404)
   }
 }
 
@@ -78,6 +77,28 @@ export const deleteById = async (req, res) => {
     await users.findByIdAndUpdate(data.author, {
       $pull: { articles: data._id },
     })
+    res.status(204).send()
+  } else {
+    throw new NotFoundError(`Article not found by id ${id}`, 404)
+  }
+}
+
+export const approveById = async (req, res) => {
+  debug(debugRouter, req)
+  const id = req.params['articleId']
+  const data = await findByIdAndApprove(id)
+  if (data && data.check === true) {
+    res.status(204).send()
+  } else {
+    throw new NotFoundError(`Article not found by id ${id}`, 404)
+  }
+}
+
+export const unapproveById = async (req, res) => {
+  debug(debugRouter, req)
+  const id = req.params['articleId']
+  const data = await findByIdAndUnapprove(id)
+  if (data && data.check === false) {
     res.status(204).send()
   } else {
     throw new NotFoundError(`Id ${id} not found`, 404)

@@ -33,5 +33,4 @@ export const updateUserSchema = Joi.object({
     .trim()
     .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/))
     .min(8),
-  isAdmin: Joi.boolean(),
 })
