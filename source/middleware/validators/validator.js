@@ -10,6 +10,6 @@ export const validator = (schema) => async (req, res, next) => {
     next()
   } catch (error) {
     const messages = error.details.map((item) => item.message)
-    throw new ValidationError(messages, 400)
+    throw new ValidationError(messages)
   }
 }

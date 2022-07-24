@@ -33,8 +33,7 @@ articlesSchema.post('save', function (error, doc, next) {
   if (error.name === 'MongoServerError' && error.code === 11000) {
     next(
       new ValidationError(
-        `Duplicate value error in ${JSON.stringify(error.keyValue)}`,
-        400
+        `Duplicate value error in ${JSON.stringify(error.keyValue)}`
       )
     )
   } else {
@@ -46,8 +45,7 @@ articlesSchema.post('findOneAndUpdate', function (error, doc, next) {
   if (error.name === 'MongoServerError' && error.code === 11000) {
     next(
       new ValidationError(
-        `Duplicate value error in ${JSON.stringify(error.keyValue)}`,
-        400
+        `Duplicate value error in ${JSON.stringify(error.keyValue)}`
       )
     )
   } else {

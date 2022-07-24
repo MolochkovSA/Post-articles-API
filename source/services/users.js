@@ -11,7 +11,7 @@ export const create = async (obj) => {
     delete userObject.password
     return userObject
   } catch (error) {
-    throw new ValidationError(error.message, 400)
+    throw new ValidationError(error.message)
   }
 }
 

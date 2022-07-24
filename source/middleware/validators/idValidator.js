@@ -9,6 +9,6 @@ export const idValidator = (param) => async (req, res, next) => {
   if (mongoose.Types.ObjectId.isValid(id)) {
     return next()
   } else {
-    throw new ValidationError(`Id ${id} is invalid`, 404)
+    throw new ValidationError(`Id ${id} is invalid`)
   }
 }

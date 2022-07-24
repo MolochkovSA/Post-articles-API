@@ -43,7 +43,7 @@ app.use('/articles', routers.articles)
 
 // NotFoundHandler
 app.use('*', (req, res, next) => {
-  throw new NotFoundError(`Page ${req.baseUrl} not found`, 404)
+  throw new NotFoundError(`Page ${req.baseUrl} not found`)
 })
 
 // Errorhandler

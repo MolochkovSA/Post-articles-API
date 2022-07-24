@@ -1,5 +1,5 @@
-// Models
-import { articles } from '../../models/index.js'
+// Services
+import { articles } from '../../services/index.js'
 
 // Middleware
 import { checkAdmin } from './index.js'

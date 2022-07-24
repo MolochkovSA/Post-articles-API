@@ -1,5 +1,5 @@
-// Models
-import { users } from '../models/index.js'
+// Services
+import { users } from '../services/index.js'
 
 // Config
 import { ADMIN_EMAIL, ADMIN_PASSWORD } from '../config.js'

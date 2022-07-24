@@ -2,8 +2,8 @@
 import jwt from 'jsonwebtoken'
 import randomize from 'randomatic'
 
-// Models
-import { users, auth } from '../models/index.js'
+// Services
+import { users, auth } from '../services/index.js'
 
 // Instruments
 import { comparePassword, AuthorizeError } from '../utils/index.js'
@@ -14,7 +14,7 @@ import { JWT_PASSWORD } from '../config.js'
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization')
   if (!authHeader) {
-    throw new AuthorizeError('Сredentials are not valid', 401)
+    throw new AuthorizeError('Сredentials are not valid')
   }
 
   const [type, credentials] = authHeader.split(' ')
@@ -25,12 +25,12 @@ export const authenticate = async (req, res, next) => {
   const user = await users.findOne({ email: email })
 
   if (!user) {
-    throw new AuthorizeError('Сredentials are not valid', 401)
+    throw new AuthorizeError('Сredentials are not valid')
   }
 
   const result = await comparePassword(password, user.password)
   if (!result) {
-    throw new AuthorizeError('Сredentials are not valid', 401)
+    throw new AuthorizeError('Сredentials are not valid')
   }
 
   const salt = randomize('Aa0!', 30)
@@ -42,7 +42,7 @@ export const authenticate = async (req, res, next) => {
     salt: salt,
   })
   if (!storage) {
-    throw new AuthorizeError('Token is not written to the database', 400)
+    throw new AuthorizeError('Token is not written to the database')
   }
 
   res.setHeader('X-Token', token)

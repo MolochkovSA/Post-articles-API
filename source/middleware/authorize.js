@@ -1,8 +1,8 @@
 // Core
 import jwt from 'jsonwebtoken'
 
-// Models
-import { auth } from '../models/index.js'
+// Services
+import { auth } from '../services/index.js'
 
 // Instruments
 import { getIdFromToken, AuthorizeError } from '../utils/index.js'
@@ -13,10 +13,7 @@ import { JWT_PASSWORD } from '../config.js'
 export const authorize = async (req, res, next) => {
   const token = req.get('X-token')
   if (!token) {
-    throw new AuthorizeError(
-      'That may be, but you have no right to access it',
-      403
-    )
+    throw new AuthorizeError('That may be, but you have no right to access it')
   }
 
   const id = getIdFromToken(token)
@@ -24,10 +21,7 @@ export const authorize = async (req, res, next) => {
   const obj = await auth.findOne({ userId: id })
 
   if (!obj) {
-    throw new AuthorizeError(
-      'That may be, but you have no right to access it',
-      403
-    )
+    throw new AuthorizeError('That may be, but you have no right to access it')
   }
 
   const key = JWT_PASSWORD + obj.salt
@@ -37,9 +31,6 @@ export const authorize = async (req, res, next) => {
     req.locals = verify
     next()
   } catch {
-    throw new AuthorizeError(
-      'That may be, but you have no right to access it',
-      403
-    )
+    throw new AuthorizeError('That may be, but you have no right to access it')
   }
 }

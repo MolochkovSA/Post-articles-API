@@ -1,8 +1,8 @@
 // Core
 import dg from 'debug'
 
-// Models
-import { users } from '../models/index.js'
+// Services
+import { users } from '../services/index.js'
 const {
   create,
   find,
@@ -36,7 +36,7 @@ export const post = async (req, res) => {
   if (data) {
     res.status(201).json(data)
   } else {
-    throw new ValidationError('Incorrect payload', 400)
+    throw new ValidationError('Incorrect payload')
   }
 }
 
@@ -47,7 +47,7 @@ export const getById = async (req, res) => {
   if (data) {
     res.status(200).json(data)
   } else {
-    throw new NotFoundError(`User not found by id ${id}`, 404)
+    throw new NotFoundError(`User not found by id ${id}`)
   }
 }
 
@@ -58,7 +58,7 @@ export const updateById = async (req, res) => {
   if (data) {
     res.status(200).json(data)
   } else {
-    throw new NotFoundError(`User not found by id ${id}`, 404)
+    throw new NotFoundError(`User not found by id ${id}`)
   }
 }
 
@@ -69,7 +69,7 @@ export const deleteById = async (req, res) => {
   if (data) {
     res.status(204).send()
   } else {
-    throw new NotFoundError(`User not found by id ${id}`, 404)
+    throw new NotFoundError(`User not found by id ${id}`)
   }
 }
 
@@ -80,7 +80,7 @@ export const makeAdminById = async (req, res) => {
   if (data && data.isAdmin === true) {
     res.status(204).send()
   } else {
-    throw new NotFoundError(`User not found by id ${id}`, 404)
+    throw new NotFoundError(`User not found by id ${id}`)
   }
 }
 
@@ -91,6 +91,6 @@ export const excludeAdminById = async (req, res) => {
   if (data && data.isAdmin === false) {
     res.status(204).send()
   } else {
-    throw new NotFoundError(`User not found by id ${id}`, 404)
+    throw new NotFoundError(`User not found by id ${id}`)
   }
 }

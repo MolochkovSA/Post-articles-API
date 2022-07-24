@@ -1,8 +1,8 @@
 // Core
 import dg from 'debug'
 
-// Models
-import { auth } from '../models/index.js'
+// Services
+import { auth } from '../services/index.js'
 const { findOneAndDelete } = auth
 
 // Instruments

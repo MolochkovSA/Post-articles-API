@@ -1,8 +1,8 @@
 // Core
 import dg from 'debug'
 
-// Models
-import { articles } from '../models/index.js'
+// Services
+import { articles } from '../services/index.js'
 const {
   create,
   find,
@@ -12,7 +12,7 @@ const {
   findByIdAndApprove,
   findByIdAndUnapprove,
 } = articles
-import { users } from '../models/index.js'
+import { users } from '../services/index.js'
 
 // Instruments
 import { debug, ValidationError, NotFoundError } from '../utils/index.js'
@@ -42,7 +42,7 @@ export const post = async (req, res) => {
   if (data) {
     res.status(201).json(data)
   } else {
-    throw new ValidationError('Incorrect payload', 400)
+    throw new ValidationError('Incorrect payload')
   }
 }
 
@@ -53,7 +53,7 @@ export const getById = async (req, res) => {
   if (data) {
     res.status(200).json(data)
   } else {
-    throw new NotFoundError(`Article not found by id ${id}`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`)
   }
 }
 
@@ -65,7 +65,7 @@ export const updateById = async (req, res) => {
     const data = await findByIdAndUpdate(id, req.body, { new: true })
     res.status(200).json(data)
   } else {
-    throw new NotFoundError(`Article not found by id ${id}`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`)
   }
 }
 
@@ -79,7 +79,7 @@ export const deleteById = async (req, res) => {
     })
     res.status(204).send()
   } else {
-    throw new NotFoundError(`Article not found by id ${id}`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`)
   }
 }
 
@@ -90,7 +90,7 @@ export const approveById = async (req, res) => {
   if (data && data.check === true) {
     res.status(204).send()
   } else {
-    throw new NotFoundError(`Article not found by id ${id}`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`)
   }
 }
 
@@ -101,6 +101,6 @@ export const unapproveById = async (req, res) => {
   if (data && data.check === false) {
     res.status(204).send()
   } else {
-    throw new NotFoundError(`Article not found by id ${id}`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`)
   }
 }

@@ -9,7 +9,7 @@ export const create = async (obj) => {
     const data = await articles.create(obj)
     return data
   } catch (error) {
-    throw new ValidationError(error.message, 400)
+    throw new ValidationError(error.message)
   }
 }
 
