@@ -2,13 +2,12 @@
 import dg from 'debug'
 import { app } from './server.js'
 
-// Instruments
-import { getPort } from './utils/index.js'
+// Config
+import { PORT } from './config.js'
 
 // DB
 import { connection } from './db/index.js'
 
-const PORT = getPort()
 const debugServer = dg('server:main')
 
 connection

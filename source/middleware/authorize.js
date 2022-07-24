@@ -5,7 +5,10 @@ import jwt from 'jsonwebtoken'
 import { auth } from '../models/index.js'
 
 // Instruments
-import { getPassword, getIdFromToken, AuthorizeError } from '../utils/index.js'
+import { getIdFromToken, AuthorizeError } from '../utils/index.js'
+
+// Config
+import { JWT_PASSWORD } from '../config.js'
 
 export const authorize = async (req, res, next) => {
   const token = req.get('X-token')
@@ -27,7 +30,7 @@ export const authorize = async (req, res, next) => {
     )
   }
 
-  const key = getPassword() + obj.salt
+  const key = JWT_PASSWORD + obj.salt
 
   try {
     const verify = await jwt.verify(token, key)

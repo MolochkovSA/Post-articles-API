@@ -2,17 +2,16 @@
 import mongoose from 'mongoose'
 import dg from 'debug'
 
-// Instruments
-import { getDBUrl } from '../utils/index.js'
+// Config
+import { DB_URL } from '../config.js'
 
 const debugDB = dg('db')
-const DBUrl = getDBUrl()
 const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }
 
-export const connection = mongoose.connect(DBUrl, mongooseOptions)
+export const connection = mongoose.connect(DB_URL, mongooseOptions)
 
 connection
   .then(() => {

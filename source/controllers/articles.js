@@ -101,6 +101,6 @@ export const unapproveById = async (req, res) => {
   if (data && data.check === false) {
     res.status(204).send()
   } else {
-    throw new NotFoundError(`Id ${id} not found`, 404)
+    throw new NotFoundError(`Article not found by id ${id}`, 404)
   }
 }

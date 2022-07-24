@@ -1,4 +1,10 @@
-export { getPort, getDBUrl, getPassword, getAdminProfile } from './env/index.js'
+export {
+  getPort,
+  getDBUrl,
+  getPassword,
+  getAdminEmail,
+  getAdminPassword,
+} from './env/index.js'
 export {
   logger,
   debug,

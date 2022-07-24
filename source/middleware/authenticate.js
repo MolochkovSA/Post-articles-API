@@ -6,7 +6,10 @@ import randomize from 'randomatic'
 import { users, auth } from '../models/index.js'
 
 // Instruments
-import { getPassword, comparePassword, AuthorizeError } from '../utils/index.js'
+import { comparePassword, AuthorizeError } from '../utils/index.js'
+
+// Config
+import { JWT_PASSWORD } from '../config.js'
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization')
@@ -31,7 +34,7 @@ export const authenticate = async (req, res, next) => {
   }
 
   const salt = randomize('Aa0!', 30)
-  const key = getPassword() + salt
+  const key = JWT_PASSWORD + salt
   const token = await jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, key)
 
   const storage = await auth.create({
