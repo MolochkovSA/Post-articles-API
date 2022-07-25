@@ -14,7 +14,7 @@ const {
 } = users
 
 // Views
-import { UserView, UsersView } from '../views/index.js'
+import { getUserView, getUserViews } from '../views/index.js'
 
 // Instruments
 import { debug } from '../utils/index.js'
@@ -24,14 +24,14 @@ const debugRouter = dg('router:users')
 export const post = async (req, res) => {
   debug(debugRouter, req)
   const data = await create(req.body)
-  const userProfile = UserView(data)
+  const userProfile = getUserView(data)
   res.status(201).json(userProfile)
 }
 
 export const get = async (req, res) => {
   debug(debugRouter, req)
   const data = await find()
-  const usersProfiles = UsersView(data)
+  const usersProfiles = getUserViews(data)
 
   res.status(200).json(usersProfiles)
 }
@@ -40,7 +40,7 @@ export const getById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
   const data = await findById(id)
-  const userProfile = UserView(data)
+  const userProfile = getUserView(data)
   res.status(200).json(userProfile)
 }
 
@@ -48,7 +48,7 @@ export const updateById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
   const data = await findByIdAndUpdate(id, req.body)
-  const userProfile = UserView(data)
+  const userProfile = getUserView(data)
   res.status(200).json(userProfile)
 }
 

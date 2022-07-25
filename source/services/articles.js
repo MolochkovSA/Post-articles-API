@@ -9,14 +9,13 @@ import { ValidationError, NotFoundError } from '../utils/index.js'
 
 export const create = async (obj) => {
   const data = await articles.create(obj)
-  if (data) {
-    await users.findByIdAndUpdate(obj.author, {
-      $push: { articles: data._id },
-    })
-    return data
-  } else {
+  if (!data) {
     throw new ValidationError('Incorrect payload')
   }
+  await users.findByIdAndUpdate(obj.author, {
+    $push: { articles: data._id },
+  })
+  return data
 }
 
 export const find = async () => {
@@ -30,36 +29,33 @@ export const findById = async (id) => {
   const data = await articles.findById(id).populate({
     path: 'author',
   })
-  if (data) {
-    return data
-  } else {
+  if (!data) {
     throw new NotFoundError(`Article not found by id ${id}`)
   }
+  return data
 }
 
 export const findByIdAndUpdate = async (id, obj) => {
-  const data = await articles.findByIdAndUpdate(id, { check: false })
-  if (data) {
-    const data = await articles
-      .findByIdAndUpdate(id, obj, { new: true })
-      .populate({
-        path: 'author',
-      })
-    return data
-  } else {
+  const uncheck = await articles.findByIdAndUpdate(id, { check: false })
+  if (!uncheck) {
     throw new NotFoundError(`Article not found by id ${id}`)
   }
+  const data = await articles
+    .findByIdAndUpdate(id, obj, { new: true })
+    .populate({
+      path: 'author',
+    })
+  return data
 }
 
 export const findByIdAndDelete = async (id) => {
   const data = await articles.findByIdAndDelete(id)
-  if (data) {
-    await users.findByIdAndUpdate(data.author, {
-      $pull: { articles: data._id },
-    })
-  } else {
+  if (!data) {
     throw new NotFoundError(`Article not found by id ${id}`)
   }
+  await users.findByIdAndUpdate(data.author, {
+    $pull: { articles: data._id },
+  })
 }
 
 export const findByIdAndApprove = async (id) => {

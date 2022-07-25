@@ -1,4 +1,4 @@
-export const ArticleView = (data) => {
+export const getArticleView = (data) => {
   const articleProfile = {
     id: data._id,
     author: { id: data.author._id, name: data.author.name },
@@ -12,7 +12,7 @@ export const ArticleView = (data) => {
   return articleProfile
 }
 
-export const ArticlesView = (data) => {
+export const getArticleViews = (data) => {
   const articlesProfile = data.map((item) => {
     return {
       id: item._id,

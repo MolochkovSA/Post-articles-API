@@ -1,7 +1,7 @@
 // Views
-import { ArticlesView } from './index.js'
+import { getArticleViews } from './index.js'
 
-export const UserView = (data) => {
+export const getUserView = (data) => {
   const userProfile = {
     id: data._id,
     name: data.name,
@@ -9,13 +9,13 @@ export const UserView = (data) => {
     age: data.age,
     phone: data.phone,
     email: data.email,
-    articles: ArticlesView(data.articles),
+    articles: getArticleViews(data.articles),
   }
 
   return userProfile
 }
 
-export const UsersView = (data) => {
+export const getUserViews = (data) => {
   const usersProfiles = data.map((item) => {
     return {
       id: item._id,

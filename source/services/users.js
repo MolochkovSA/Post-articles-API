@@ -6,11 +6,10 @@ import { ValidationError, NotFoundError } from '../utils/index.js'
 
 export const create = async (obj) => {
   const data = await users.create(obj)
-  if (data) {
-    return data
-  } else {
+  if (!data) {
     throw new ValidationError('Incorrect payload')
   }
+  return data
 }
 
 export const find = async () => {
@@ -32,11 +31,10 @@ export const findById = async (id) => {
       options: { sort: { created: 1 } },
     })
     .select('-password')
-  if (data) {
-    return data
-  } else {
+  if (!data) {
     throw new NotFoundError(`User not found by id ${id}`)
   }
+  return data
 }
 
 export const findByIdAndUpdate = async (id, obj) => {
@@ -48,11 +46,10 @@ export const findByIdAndUpdate = async (id, obj) => {
       options: { sort: { created: 1 } },
     })
     .select('-password')
-  if (data) {
-    return data
-  } else {
+  if (!data) {
     throw new NotFoundError(`User not found by id ${id}`)
   }
+  return data
 }
 
 export const findByIdAndDelete = async (id) => {

@@ -1,2 +1,2 @@
-export { UserView, UsersView } from './users.js'
-export { ArticleView, ArticlesView } from './articles.js'
+export { getUserView, getUserViews } from './users.js'
+export { getArticleView, getArticleViews } from './articles.js'
