@@ -12,7 +12,7 @@ DEBUG='server:*,router:*,db'
 # Server
 PORT=8000
 
-# Mongo DB URL1
+# Mongo DB URL
 DB_URL='mongodb://localhost:27017/smolochkov'
 
 # Admin email
@@ -23,8 +23,6 @@ ADMIN_PASSWORD='Very_strong_pa$$word_is%123456789'
 
 # JWT password
 JWT_PASSWORD='Very_secret_pa$$word_is%123456789'
-
-#вью модели; перенести логику обработки ответа из контроллера в сервисы;
 ```
 
 # Тестовые данные для наполнения
