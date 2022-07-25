@@ -13,6 +13,9 @@ const {
   findByIdAndExcludeAdmin,
 } = users
 
+// Views
+import { upsertUserView, findUserView, findUsersView } from '../views/index.js'
+
 // Instruments
 import { debug } from '../utils/index.js'
 
@@ -21,27 +24,32 @@ const debugRouter = dg('router:users')
 export const post = async (req, res) => {
   debug(debugRouter, req)
   const data = await create(req.body)
-  res.status(201).json(data)
+  const userProfile = upsertUserView(data)
+  res.status(201).json(userProfile)
 }
 
 export const get = async (req, res) => {
   debug(debugRouter, req)
   const data = await find()
-  res.status(200).json(data)
+  const usersProfiles = findUsersView(data)
+
+  res.status(200).json(usersProfiles)
 }
 
 export const getById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
   const data = await findById(id)
-  res.status(200).json(data)
+  const userProfile = findUserView(data)
+  res.status(200).json(userProfile)
 }
 
 export const updateById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
   const data = await findByIdAndUpdate(id, req.body)
-  res.status(200).json(data)
+  const userProfile = upsertUserView(data)
+  res.status(200).json(userProfile)
 }
 
 export const deleteById = async (req, res) => {

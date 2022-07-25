@@ -13,8 +13,15 @@ const {
   findByIdAndDisapprove,
 } = articles
 
+// Views
+import {
+  upsertArticleView,
+  findArticleView,
+  findArticlesView,
+} from '../views/index.js'
+
 // Instruments
-import { debug, NotFoundError } from '../utils/index.js'
+import { debug } from '../utils/index.js'
 
 const debugRouter = dg('router:articles')
 
@@ -22,27 +29,31 @@ export const post = async (req, res) => {
   debug(debugRouter, req)
   req.body.author = req.locals._id
   const data = await create(req.body)
-  res.status(201).json(data)
+  const articleProfile = upsertArticleView(data)
+  res.status(201).json(articleProfile)
 }
 
 export const get = async (req, res) => {
   debug(debugRouter, req)
   const data = await find()
-  res.status(200).json(data)
+  const articleProfile = findArticlesView(data)
+  res.status(200).json(articleProfile)
 }
 
 export const getById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['articleId']
   const data = await findById(id)
-  res.status(200).json(data)
+  const articleProfile = findArticleView(data)
+  res.status(200).json(articleProfile)
 }
 
 export const updateById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['articleId']
   const data = await findByIdAndUpdate(id, req.body)
-  res.status(200).json(data)
+  const articleProfile = upsertArticleView(data)
+  res.status(200).json(articleProfile)
 }
 
 export const deleteById = async (req, res) => {

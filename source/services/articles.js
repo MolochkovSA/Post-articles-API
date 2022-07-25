@@ -21,22 +21,15 @@ export const create = async (obj) => {
 }
 
 export const find = async () => {
-  let data = await articles.find().populate({
+  const data = await articles.find().populate({
     path: 'author',
-    select: 'name',
   })
-  if (!data.length) {
-    data = {
-      message: 'the database does not contain articles',
-    }
-  }
   return data
 }
 
 export const findById = async (id) => {
   const data = await articles.findById(id).populate({
     path: 'author',
-    select: 'name',
   })
   if (data) {
     return data

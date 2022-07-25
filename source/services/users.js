@@ -7,8 +7,6 @@ import { ValidationError, NotFoundError } from '../utils/index.js'
 export const create = async (obj) => {
   const data = await users.create(obj)
   if (data) {
-    const userObject = data.toObject()
-    delete userObject.password
     return userObject
   } else {
     throw new ValidationError('Incorrect payload')
@@ -16,17 +14,7 @@ export const create = async (obj) => {
 }
 
 export const find = async () => {
-  let data = await users
-    .find()
-    .populate({
-      path: 'articles',
-      select: '-author -content -__v',
-      options: { sort: { created: 1 } },
-    })
-    .select('-password')
-  if (!data.length) {
-    data = { message: 'the database does not contain users' }
-  }
+  const data = await users.find().select('-password')
   return data
 }
 
@@ -40,7 +28,6 @@ export const findById = async (id) => {
     .findById(id)
     .populate({
       path: 'articles',
-      select: '-author -content -__v',
       options: { sort: { created: 1 } },
     })
     .select('-password')
