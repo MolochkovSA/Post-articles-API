@@ -15,7 +15,7 @@ const {
   updateById,
   deleteById,
   approveById,
-  unapproveById,
+  disapproveById,
 } = articles
 
 // Schemas
@@ -48,9 +48,9 @@ router.post(
   approveById
 )
 router.post(
-  '/:articleId/unapprove',
+  '/:articleId/disapprove',
   [authorize, idValidator('articleId'), checkAdmin],
-  unapproveById
+  disapproveById
 )
 
 export { router as articles }

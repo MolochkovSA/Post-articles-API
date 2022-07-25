@@ -14,7 +14,7 @@ const authSchema = new mongoose.Schema({
   expireAt: {
     type: Date,
     default: Date.now,
-    expires: 3000,
+    expires: 3600,
   },
 })
 

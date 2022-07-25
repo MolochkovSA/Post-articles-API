@@ -14,83 +14,53 @@ const {
 } = users
 
 // Instruments
-import { debug, ValidationError, NotFoundError } from '../utils/index.js'
+import { debug } from '../utils/index.js'
 
 const debugRouter = dg('router:users')
-
-export const get = async (req, res) => {
-  debug(debugRouter, req)
-  const data = await find()
-  if (data.length) {
-    res.status(200).json(data)
-  } else {
-    res.status(400).json({
-      message: 'the database does not contain users',
-    })
-  }
-}
 
 export const post = async (req, res) => {
   debug(debugRouter, req)
   const data = await create(req.body)
-  if (data) {
-    res.status(201).json(data)
-  } else {
-    throw new ValidationError('Incorrect payload')
-  }
+  res.status(201).json(data)
+}
+
+export const get = async (req, res) => {
+  debug(debugRouter, req)
+  const data = await find()
+  res.status(200).json(data)
 }
 
 export const getById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
   const data = await findById(id)
-  if (data) {
-    res.status(200).json(data)
-  } else {
-    throw new NotFoundError(`User not found by id ${id}`)
-  }
+  res.status(200).json(data)
 }
 
 export const updateById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
-  const data = await findByIdAndUpdate(id, req.body, { new: true })
-  if (data) {
-    res.status(200).json(data)
-  } else {
-    throw new NotFoundError(`User not found by id ${id}`)
-  }
+  const data = await findByIdAndUpdate(id, req.body)
+  res.status(200).json(data)
 }
 
 export const deleteById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
-  const data = await findByIdAndDelete(id)
-  if (data) {
-    res.status(204).send()
-  } else {
-    throw new NotFoundError(`User not found by id ${id}`)
-  }
+  await findByIdAndDelete(id)
+  res.status(204).send()
 }
 
 export const makeAdminById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
-  const data = await findByIdAndMakeAdmin(id)
-  if (data && data.isAdmin === true) {
-    res.status(204).send()
-  } else {
-    throw new NotFoundError(`User not found by id ${id}`)
-  }
+  await findByIdAndMakeAdmin(id)
+  res.status(204).send()
 }
 
 export const excludeAdminById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['userId']
-  const data = await findByIdAndExcludeAdmin(id)
-  if (data && data.isAdmin === false) {
-    res.status(204).send()
-  } else {
-    throw new NotFoundError(`User not found by id ${id}`)
-  }
+  await findByIdAndExcludeAdmin(id)
+  res.status(204).send()
 }

@@ -2,21 +2,21 @@
 import { users } from '../odm/index.js'
 
 // Instruments
-import { ValidationError } from '../utils/index.js'
+import { ValidationError, NotFoundError } from '../utils/index.js'
 
 export const create = async (obj) => {
-  try {
-    const data = await users.create(obj)
+  const data = await users.create(obj)
+  if (data) {
     const userObject = data.toObject()
     delete userObject.password
     return userObject
-  } catch (error) {
-    throw new ValidationError(error.message)
+  } else {
+    throw new ValidationError('Incorrect payload')
   }
 }
 
 export const find = async () => {
-  const data = await users
+  let data = await users
     .find()
     .populate({
       path: 'articles',
@@ -24,6 +24,9 @@ export const find = async () => {
       options: { sort: { created: 1 } },
     })
     .select('-password')
+  if (!data.length) {
+    data = { message: 'the database does not contain users' }
+  }
   return data
 }
 
@@ -41,19 +44,29 @@ export const findById = async (id) => {
       options: { sort: { created: 1 } },
     })
     .select('-password')
-  return data
+  if (data) {
+    return data
+  } else {
+    throw new NotFoundError(`User not found by id ${id}`)
+  }
 }
 
 export const findByIdAndUpdate = async (id, obj) => {
   const data = await users
     .findByIdAndUpdate(id, obj, { new: true })
     .select('-password')
-  return data
+  if (data) {
+    return data
+  } else {
+    throw new NotFoundError(`User not found by id ${id}`)
+  }
 }
 
 export const findByIdAndDelete = async (id) => {
   const data = await users.findByIdAndDelete(id)
-  return data
+  if (!data) {
+    throw new NotFoundError(`User not found by id ${id}`)
+  }
 }
 
 export const findByIdAndMakeAdmin = async (id) => {
@@ -62,7 +75,9 @@ export const findByIdAndMakeAdmin = async (id) => {
     { isAdmin: true },
     { new: true }
   )
-  return data
+  if (!data || data.isAdmin !== true) {
+    throw new NotFoundError(`User not found by id ${id}`)
+  }
 }
 
 export const findByIdAndExcludeAdmin = async (id) => {
@@ -71,5 +86,7 @@ export const findByIdAndExcludeAdmin = async (id) => {
     { isAdmin: false },
     { new: true }
   )
-  return data
+  if (!data || data.isAdmin !== false) {
+    throw new NotFoundError(`User not found by id ${id}`)
+  }
 }
