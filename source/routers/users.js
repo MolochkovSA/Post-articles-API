@@ -5,6 +5,7 @@ import express from 'express'
 import { checkUser, checkAdmin } from '../middleware/index.js'
 import { idValidator, validator } from '../middleware/index.js'
 import { authorize } from '../middleware/index.js'
+import { createAccountLimiter } from '../middleware/index.js'
 
 // Controllers
 import { users } from '../controllers/index.js'
@@ -25,7 +26,11 @@ const {
 const router = express.Router()
 
 router.get('/', [authorize], get)
-router.post('/', [validator(createUserSchema)], post)
+router.post(
+  '/',
+  [createAccountLimiter(5 * 1000), validator(createUserSchema)],
+  post
+)
 
 router.get('/:userId', [authorize, idValidator('userId')], getById)
 router.put(
