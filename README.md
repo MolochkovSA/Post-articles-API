@@ -12,20 +12,19 @@ DEBUG='server:*,router:*,db'
 # Server
 PORT=8000
 
-# Mongo DB URL
+# Mongo DB URL1
 DB_URL='mongodb://localhost:27017/smolochkov'
 
-# Admin profile
-ADMIN={"name":"admin", "sex":"male","birthDay":"1988-01-01", "phone": "+7-123-456-78-90", "email": "admin@mail.ru", "password":"Very_strong_pa$$word_is%123456789", "isAdmin": true}
+# Admin email
+ADMIN_EMAIL='admin@mail.ru'
+
+# Admin password
+ADMIN_PASSWORD='Very_strong_pa$$word_is%123456789'
 
 # JWT password
-PASSWORD='Very_secret_pa$$word_is%123456789'
+JWT_PASSWORD='Very_secret_pa$$word_is%123456789'
 
-# Locked user properties
-LOCKED_USER_PROPERTIES = isAdmin, articles, created, modified, __v
-
-# Locked articles properties
-LOCKED_ARTICLES_PROPERTIES = author, check
+#вью модели; перенести логику обработки ответа из контроллера в сервисы;
 ```
 
 # Тестовые данные для наполнения
