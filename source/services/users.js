@@ -7,7 +7,7 @@ import { ValidationError, NotFoundError } from '../utils/index.js'
 export const create = async (obj) => {
   const data = await users.create(obj)
   if (data) {
-    return userObject
+    return data
   } else {
     throw new ValidationError('Incorrect payload')
   }
@@ -28,6 +28,7 @@ export const findById = async (id) => {
     .findById(id)
     .populate({
       path: 'articles',
+      populate: { path: 'author' },
       options: { sort: { created: 1 } },
     })
     .select('-password')
@@ -41,6 +42,11 @@ export const findById = async (id) => {
 export const findByIdAndUpdate = async (id, obj) => {
   const data = await users
     .findByIdAndUpdate(id, obj, { new: true })
+    .populate({
+      path: 'articles',
+      populate: { path: 'author' },
+      options: { sort: { created: 1 } },
+    })
     .select('-password')
   if (data) {
     return data

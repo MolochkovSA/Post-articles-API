@@ -1,6 +1,2 @@
-export { upsertUserView, findUserView, findUsersView } from './users.js'
-export {
-  upsertArticleView,
-  findArticleView,
-  findArticlesView,
-} from './articles.js'
+export { UserView, UsersView } from './users.js'
+export { ArticleView, ArticlesView } from './articles.js'

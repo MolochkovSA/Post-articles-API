@@ -14,11 +14,7 @@ const {
 } = articles
 
 // Views
-import {
-  upsertArticleView,
-  findArticleView,
-  findArticlesView,
-} from '../views/index.js'
+import { ArticleView, ArticlesView } from '../views/index.js'
 
 // Instruments
 import { debug } from '../utils/index.js'
@@ -29,14 +25,14 @@ export const post = async (req, res) => {
   debug(debugRouter, req)
   req.body.author = req.locals._id
   const data = await create(req.body)
-  const articleProfile = upsertArticleView(data)
+  const articleProfile = ArticleView(data)
   res.status(201).json(articleProfile)
 }
 
 export const get = async (req, res) => {
   debug(debugRouter, req)
   const data = await find()
-  const articleProfile = findArticlesView(data)
+  const articleProfile = ArticlesView(data)
   res.status(200).json(articleProfile)
 }
 
@@ -44,7 +40,7 @@ export const getById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['articleId']
   const data = await findById(id)
-  const articleProfile = findArticleView(data)
+  const articleProfile = ArticleView(data)
   res.status(200).json(articleProfile)
 }
 
@@ -52,7 +48,7 @@ export const updateById = async (req, res) => {
   debug(debugRouter, req)
   const id = req.params['articleId']
   const data = await findByIdAndUpdate(id, req.body)
-  const articleProfile = upsertArticleView(data)
+  const articleProfile = ArticleView(data)
   res.status(200).json(articleProfile)
 }
 

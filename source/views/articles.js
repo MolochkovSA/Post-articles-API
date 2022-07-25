@@ -1,19 +1,7 @@
-export const upsertArticleView = (data) => {
+export const ArticleView = (data) => {
   const articleProfile = {
     id: data._id,
-    theme: data.theme,
-    content: data.content,
-    created: data.created,
-    modified: data.modified,
-  }
-
-  return articleProfile
-}
-
-export const findArticleView = (data) => {
-  const articleProfile = {
-    id: data._id,
-    author: { id: data.author.id, name: data.author.name },
+    author: { id: data.author._id, name: data.author.name },
     theme: data.theme,
     content: data.content,
     check: data.check,
@@ -24,7 +12,7 @@ export const findArticleView = (data) => {
   return articleProfile
 }
 
-export const findArticlesView = (data) => {
+export const ArticlesView = (data) => {
   const articlesProfile = data.map((item) => {
     return {
       id: item._id,
@@ -35,6 +23,5 @@ export const findArticlesView = (data) => {
       modified: item.modified,
     }
   })
-
   return articlesProfile
 }

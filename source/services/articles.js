@@ -9,7 +9,6 @@ import { ValidationError, NotFoundError } from '../utils/index.js'
 
 export const create = async (obj) => {
   const data = await articles.create(obj)
-  console.log(obj)
   if (data) {
     await users.findByIdAndUpdate(obj.author, {
       $push: { articles: data._id },
@@ -41,7 +40,11 @@ export const findById = async (id) => {
 export const findByIdAndUpdate = async (id, obj) => {
   const data = await articles.findByIdAndUpdate(id, { check: false })
   if (data) {
-    const data = await articles.findByIdAndUpdate(id, obj, { new: true })
+    const data = await articles
+      .findByIdAndUpdate(id, obj, { new: true })
+      .populate({
+        path: 'author',
+      })
     return data
   } else {
     throw new NotFoundError(`Article not found by id ${id}`)
