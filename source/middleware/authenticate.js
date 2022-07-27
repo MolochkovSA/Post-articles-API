@@ -18,7 +18,7 @@ import { JWT_PASSWORD } from '../config.js'
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization')
   if (!authHeader) {
-    throw new AuthorizeError('Сredentials are not valid')
+    throw new AuthorizeError('Сredentials are not valid', 401)
   }
 
   const [type, credentials] = authHeader.split(' ')
@@ -29,12 +29,12 @@ export const authenticate = async (req, res, next) => {
   const user = await users.findOne({ email: email })
 
   if (!user) {
-    throw new AuthorizeError('Сredentials are not valid')
+    throw new AuthorizeError('Сredentials are not valid', 401)
   }
 
   const result = await comparePassword(password, user.password)
   if (!result) {
-    throw new AuthorizeError('Сredentials are not valid')
+    throw new AuthorizeError('Сredentials are not valid', 401)
   }
 
   const salt = randomize('Aa0!', 30)
@@ -49,7 +49,7 @@ export const authenticate = async (req, res, next) => {
   })
 
   if (!storage) {
-    throw new AuthorizeError('Token is not written to the database')
+    throw new AuthorizeError('Token is not written to the database', 401)
   }
 
   res.setHeader('X-Token', token)

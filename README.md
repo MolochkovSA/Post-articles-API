@@ -1,4 +1,4 @@
-# Post articles
+# Post articles API
 
 # Перед запуском проекта:
 

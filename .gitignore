@@ -1,6 +1,7 @@
 # files
 *.log
 *.env
+*.yaml
 
 # folders
 logs/

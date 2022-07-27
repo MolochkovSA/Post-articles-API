@@ -1,6 +1,10 @@
 // Core
 import express from 'express'
 import 'express-async-errors'
+import swaggerUi from 'swagger-ui-express'
+
+// Swagger
+import { swaggerDocument } from './swagger.js'
 
 // Routers
 import * as routers from './routers/index.js'
@@ -35,6 +39,9 @@ if (process.env.NODE_ENV === 'development') {
     next()
   })
 }
+
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Routers
 app.use('/auth', routers.auth)
