@@ -562,23 +562,6 @@ export const swaggerDocument = {
             $ref: '#/components/parameters/UserId',
           },
         ],
-        requestBody: {
-          description: 'Update user account',
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                required: ['isAdmin'],
-                properties: {
-                  isAdmin: {
-                    type: 'boolean',
-                    example: true,
-                  },
-                },
-              },
-            },
-          },
-        },
         responses: {
           204: {
             description: 'Success make admin',
@@ -620,23 +603,6 @@ export const swaggerDocument = {
             $ref: '#/components/parameters/UserId',
           },
         ],
-        requestBody: {
-          description: 'Update user account',
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                required: ['isAdmin'],
-                properties: {
-                  isAdmin: {
-                    type: 'boolean',
-                    example: false,
-                  },
-                },
-              },
-            },
-          },
-        },
         responses: {
           204: {
             description: 'Success exclude admin',
@@ -678,23 +644,6 @@ export const swaggerDocument = {
             $ref: '#/components/parameters/ArticleId',
           },
         ],
-        requestBody: {
-          description: 'Update article',
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                required: ['check'],
-                properties: {
-                  check: {
-                    type: 'boolean',
-                    example: true,
-                  },
-                },
-              },
-            },
-          },
-        },
         responses: {
           204: {
             description: 'Success approve user article',
@@ -736,23 +685,6 @@ export const swaggerDocument = {
             $ref: '#/components/parameters/ArticleId',
           },
         ],
-        requestBody: {
-          description: 'Update article',
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                required: ['check'],
-                properties: {
-                  check: {
-                    type: 'boolean',
-                    example: false,
-                  },
-                },
-              },
-            },
-          },
-        },
         responses: {
           204: {
             description: 'Success approve user article',

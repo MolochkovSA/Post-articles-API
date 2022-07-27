@@ -2,6 +2,7 @@
 import express from 'express'
 import 'express-async-errors'
 import swaggerUi from 'swagger-ui-express'
+import YAML from 'yamljs'
 
 // Swagger
 import { swaggerDocument } from './swagger.js'
@@ -41,7 +42,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+// const swaggerDocument = YAML.load('./swagger.yaml')
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Routers
 app.use('/auth', routers.auth)
