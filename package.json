@@ -6,12 +6,15 @@
   "type": "module",
   "scripts": {
     "start": "nodemon",
-    "start:prod": "node -r dotenv/config  ./source/index.js"
+    "start:prod": "node -r dotenv/config  ./source/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --no-cache"
   },
   "author": "Molochkov Sergey",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "jest": "^28.1.3",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

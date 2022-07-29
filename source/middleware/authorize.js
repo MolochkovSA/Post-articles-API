@@ -11,7 +11,7 @@ import { getPayloadFromToken, AuthorizeError } from '../utils/index.js'
 import { JWT_PASSWORD } from '../config.js'
 
 export const authorize = async (req, res, next) => {
-  const token = req.get('X-token')
+  const token = req.get('X-Token')
   if (!token) {
     throw new AuthorizeError('That may be, but you have no right to access it')
   }
